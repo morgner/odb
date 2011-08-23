@@ -2,7 +2,7 @@
                         transaction.h  -  description
                              -------------------
     begin                : Fri Mar 3 2000
-    copyright            : (C) 1993..2000 by Manfred Morgner
+    copyright            : (C) 1993..2002 by Manfred Morgner
     email                : manfred@morgner.com
  ***************************************************************************/
 

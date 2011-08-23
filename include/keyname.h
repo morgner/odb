@@ -2,9 +2,8 @@
                           keyname.h  -  description
                              -------------------
     begin                : Thu Mar 23 2000
-    copyright            : (C) 2000 by Manfred Morgner
+    copyright            : (C) 2000..2005 by Manfred Morgner
     email                : manfred@morgner.com
-    $Id: keyname.h,v 1.4 2004/04/02 05:07:01 morgner Exp $
  ***************************************************************************/
 
 /***************************************************************************

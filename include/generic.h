@@ -2,7 +2,7 @@
                           generic.h  -  description
                              -------------------
     begin                : Mon Mar 13 2000
-    copyright            : (C) 1993..2000 by Manfred Morgner
+    copyright            : (C) 1993..2005 by Manfred Morgner
     email                : manfred@morgner.com
  ***************************************************************************/
 

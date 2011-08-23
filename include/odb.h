@@ -2,9 +2,8 @@
                            odb.h  -  description
                              -------------------
     begin                : Fri Mar 3 2000
-    copyright            : (C) 1993..2000 by Manfred Morgner
+    copyright            : (C) 1993..2006 by Manfred Morgner
     email                : manfred@morgner.com
-    $Id: odb.h,v 1.5 2004/04/02 05:07:01 morgner Exp $
  ***************************************************************************/
 
 /***************************************************************************
