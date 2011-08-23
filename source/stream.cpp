@@ -57,7 +57,6 @@ CStream::CStream(const std::string& sFileName, bool bWrite)
     }
   catch (...) // (CFileException* e)
     {
-//    MessageBox(0, e->m_strFileName, "ERROR - Opening", IDOK);
     throw;
     }
   } // CStream::CStream(const std::string& sFileName, bool bWrite)
@@ -71,7 +70,6 @@ CStream::~CStream()
     }
   catch (...)
     {
-//    MessageBox(0, e->m_strFileName, "ERROR - Closing", IDOK);
     throw;
     }
   } // CStream::~CStream()
@@ -84,7 +82,6 @@ bool CStream::Seek(long lPosition)
     }
   catch (...)
     {
-//  MessageBox(0, e->m_strFileName, "ERROR - Seeking", IDOK);
 //  e->Delete();
     return false;
     }

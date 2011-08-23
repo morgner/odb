@@ -116,7 +116,7 @@ bool CODB::Save(const std::string& sFileName)
     oStream << m_lMaxReason;
     oStream << (long)size();
 
-		for ( inherited::iterator it  = begin();
+    for ( inherited::iterator it  = begin();
                               it != end();
                             ++it)
       {
@@ -128,7 +128,6 @@ bool CODB::Save(const std::string& sFileName)
     }
   catch (...)
     {
-//    MessageBox(0, "Datenbank konnte nicht erzeugt werden", "Fehler", MB_ICONSTOP);
     return false;
     }
 
@@ -173,7 +172,6 @@ bool CODB::SaveXML(const std::string& sFileName)
     }
   catch (...)
     {
-//    MessageBox(0, "Datenbank konnte nicht erzeugt werden", "Fehler", MB_ICONSTOP);
     return false;
     }
 
@@ -276,7 +274,6 @@ bool CODB::Load(const std::string& sFileName)
     }
   catch (...)
     {
-//    MessageBox(0, "Datenbank konnte nicht gelesen werden", "Fehler", MB_ICONSTOP);
     return false;
     }
 
