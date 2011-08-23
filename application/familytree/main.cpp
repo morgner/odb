@@ -31,9 +31,7 @@
 #include <config.h>
 #endif
 
-// #ifdef WIN32
 #include "generic.h"
-// #endif // WIN32
 
 #include "odb.h"
 

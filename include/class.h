@@ -2,7 +2,7 @@
                           class.h  -  description
                              -------------------
     begin                : Fri Mar 3 2000
-    copyright            : (C) 1993..2005 by Manfred Morgner
+    copyright            : (C) 1993..2011 by Manfred Morgner
     email                : manfred@morgner.com
  ***************************************************************************/
 
@@ -34,10 +34,6 @@
  * @file
  * The Class.
  */
-
-#if _MSC_VER >= 1000
-#pragma once
-#endif // _MSC_VER >= 1000
 
 #include "root.h"
 

@@ -35,17 +35,9 @@
  * Atomdata.
  */
 
-#if _MSC_VER >= 1000
-#pragma once
-#endif // _MSC_VER >= 1000
-
 #include "stream.h"
 
-#ifdef WIN32
-  #include "winsock.h"
-  #else
-  #include <sys/time.h>
-  #endif // WIN32
+#include <sys/time.h>
 
 // for sprintf(..) in method "UIFormat(..)"
 #include "stdio.h"

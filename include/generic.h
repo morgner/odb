@@ -2,7 +2,7 @@
                           generic.h  -  description
                              -------------------
     begin                : Mon Mar 13 2000
-    copyright            : (C) 1993..2005 by Manfred Morgner
+    copyright            : (C) 1993..2011 by Manfred Morgner
     email                : manfred@morgner.com
  ***************************************************************************/
 
@@ -27,15 +27,9 @@
  *                                                                         *
  ***************************************************************************/
 
-#if _MSC_VER >= 1000
-#pragma once
-#pragma warning (disable : 4786)
-#endif // _MSC_VER >= 1000
-
 #ifndef __GENERIC_H
 #define __GENERIC_H
 
-// STL
 #include <string>
 #include <set>
 #include <map>
@@ -53,12 +47,8 @@ namespace odb
 
   } // namespace odb
 
-#ifdef WIN32
-  #include "winsock.h"
-  extern "C" int gettimeofday( struct timeval*, struct timezone*);
-  #else
-  #include <sys/time.h>
-  #endif // WIN32
+#include <sys/time.h>
+
 bool operator > (const timeval& t1, const timeval& t2);
 
 #ifndef _TEXT

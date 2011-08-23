@@ -34,36 +34,6 @@
 
 using namespace odb;
 
-#ifdef WIN32
-extern "C"
-  int gettimeofday( struct timeval* ptv, struct timezone* ptz)
-    {
-    int nResult = 0;
-    _timeb  stTimeB;
-    _ftime(&stTimeB);
-    try
-      {
-      if (ptv != 0)
-        {
-        ptv->tv_sec  = stTimeB.time;
-        ptv->tv_usec = stTimeB.millitm;
-        } // if (ptv != 0)
-/*
-      if (ptz != 0)
-        {
-        *ptz = stTimeB.timezone;
-        } // if (ptz != 0)
-*/
-      nResult = 1;
-      }
-    catch(...)
-      {
-      nResult = 0;
-      } // catch(...)
-    return nResult;
-  } // int gettimeofday(struct timeval *, struct timezone * )
-#endif // WIN32
-
 //------------------------------------------------------------------//
 // Construction/Destruction
 //------------------------------------------------------------------//

@@ -2,7 +2,7 @@
                           root.h  -  description
                              -------------------
     begin                : Fri Mar 3 2000
-    copyright            : (C) 1993..2006 by Manfred Morgner
+    copyright            : (C) 1993..2011 by Manfred Morgner
     email                : manfred@morgner.com
  ***************************************************************************/
 
@@ -35,18 +35,10 @@
  * Root.
  */
 
-#if _MSC_VER >= 1000
-  #pragma once
-#endif // _MSC_VER >= 1000
-
 #include "rtti.h"
 #include "stream.h"
 
-#ifdef WIN32
-  #include <sys/timeb.h>
-  #else
-  #include <sys/time.h>
-  #endif // WIN32
+#include <sys/time.h>
 
 #include <vector>
 #include <set>

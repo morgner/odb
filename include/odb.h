@@ -2,7 +2,7 @@
                            odb.h  -  description
                              -------------------
     begin                : Fri Mar 3 2000
-    copyright            : (C) 1993..2006 by Manfred Morgner
+    copyright            : (C) 1993..2011 by Manfred Morgner
     email                : manfred@morgner.com
  ***************************************************************************/
 
@@ -35,10 +35,6 @@
  * The ODB.
  */
 
-#if _MSC_VER >= 1000
-#  pragma once
-#endif // _MSC_VER >= 1000
-
 #include "root.h"
 #include "class.h"
 #include "atom.h"
@@ -48,11 +44,7 @@
 
 #include "keyname.h"
 
-#ifdef WIN32
-  #include "winsock.h"
-  #else
-  #include <sys/time.h>
-  #endif // WIN32
+#include <sys/time.h>
 
 namespace odb {
 

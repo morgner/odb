@@ -95,11 +95,7 @@ CStream& CStream::Read(void* pData, unsigned long ulSize)
   {
   try
     {
-#ifdef WIN32
     m_oFile.read( (char*)pData, ulSize );
-#else
-    m_oFile.read( (char*)pData, ulSize );
-#endif
     }
   catch (...)
     {
@@ -112,11 +108,7 @@ CStream& CStream::Write(void* pData, unsigned long ulSize)
   {
   try
     {
-#ifdef WIN32
     m_oFile.write( (char*)pData, ulSize );
-#else
-    m_oFile.write( (char*)pData, ulSize );
-#endif
     }
   catch (...)
     {
