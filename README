@@ -1,3 +1,17 @@
 odb is an Object DataBase
 
-Which means a database for storing objects in the sense of 'real word' objects.
+Which means a database for storing objects in the sense of 'real world' objects
+
+odb ist intended to save information as real world visitors would register them
+
+  - sequencially
+  - spontan
+  - without any plan
+  - ad hoc
+  - not knowing what it is
+  - as time allows it
+  - as detailed as necessary
+  - ...
+
+object by object, atom by atom, relation by relation, filling up meadows,
+linked onto strings, ...
