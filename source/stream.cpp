@@ -1,6 +1,6 @@
 /***************************************************************************
-                          stream.cpp  -  description
-                             -------------------
+                           stream.cpp
+                           -------------------
     begin                : Fri Mar 3 2000
     copyright            : (C) 1993..2011 by Manfred Morgner
     email                : manfred@morgner.com
@@ -346,6 +346,6 @@ CStream& CStream::Element(const std::string& crsName, double data)
 CStream& CStream::Element(const std::string& crsName, timeval data)
   {
   char ac[64];
-  snprintf (ac, sizeof(ac), "%ld:%d", data.tv_sec, data.tv_usec);
+  snprintf (ac, sizeof(ac), "%ld:%ld", data.tv_sec, data.tv_usec);
   return Element(crsName, std::string(ac));
   } // 
