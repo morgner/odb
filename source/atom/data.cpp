@@ -1,6 +1,6 @@
 /***************************************************************************
-                          atomdata.cpp
-                          -------------------
+                           atomdata.cpp
+                           -------------------
     begin                : Fri Mar 3 2000
     copyright            : (C) 1993..2011 by Manfred Morgner
     email                : manfred@morgner.com
@@ -28,6 +28,8 @@
  ***************************************************************************/
 
 #include "generic.h"
+
+#include <string.h> // memcpy
 
 #include "atom/data.h"
 

@@ -90,7 +90,7 @@ class CAtomDataBinary : public CAtomData
     bool DataFree();
 
   protected:
-	  unsigned char*  m_Data;  /**< binary data */
+      unsigned char*  m_Data;  /**< binary data */
       long            m_nSize; /**< size of m_Data */
 
   }; // class CAtomDataBinary : public CAtomData
