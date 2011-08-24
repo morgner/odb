@@ -1,6 +1,6 @@
 /***************************************************************************
-                          datastring.h
-                          -------------------
+                           datastring.h
+                           -------------------
     begin                : Fri Mar 3 2000
     copyright            : (C) 1993..2011 by Manfred Morgner
     email                : manfred@morgner.com
@@ -50,7 +50,7 @@ class CAtomDataString : public CAtomData
              CAtomDataString(const std::string& src);
     virtual ~CAtomDataString();
 
-    virtual long Type() { return DT_STRING; };
+    virtual long Type() { return DT_STRING; }
 
             CAtomDataString& operator = (CAtomDataString& src);
     virtual CAtomData* Copy();

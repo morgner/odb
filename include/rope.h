@@ -1,6 +1,6 @@
 /***************************************************************************
-                           rope.h  -  description
-                             -------------------
+                           rope.h
+                           -------------------
     begin                : Sun Mar 19 2000
     copyright            : (C) 1993..2011 by Manfred Morgner
     email                : manfred@morgner.com
@@ -52,7 +52,7 @@ class CRope : public CRoot
     typedef CRoot inherited;
 
   protected:
-    CRope() {}; // forbidden
+    CRope() {} // forbidden
   public:
     CRope(long lid);
     CRope(CAtom* poStartpoint, const std::string& sName = _TEXT(""));

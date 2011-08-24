@@ -1,8 +1,8 @@
 /***************************************************************************
-                           rtti.h  -  description
-                             -------------------
+                           rtti.h
+                           -------------------
     begin                : Fri Mar 3 2000
-    copyright            : (C) 1993..2010 by Manfred Morgner
+    copyright            : (C) 1993..2011 by Manfred Morgner
     email                : manfred@morgner.com
  ***************************************************************************/
 
@@ -72,7 +72,7 @@ typedef
         sClassName(psz),
         lRelease(r),
         lVersion(v)
-      { /* all done outside */};
+      { /* all done outside */}
 
     } OBJECTINFO;
 

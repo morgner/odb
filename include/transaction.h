@@ -1,6 +1,6 @@
 /***************************************************************************
-                        transaction.h  -  description
-                             -------------------
+                           transaction.h
+                           -------------------
     begin                : Fri Mar 3 2000
     copyright            : (C) 1993..2011 by Manfred Morgner
     email                : manfred@morgner.com
@@ -80,7 +80,7 @@ class CTransaction
         ~CSnapShot()
           {
           delete m_poObject;
-          };
+          }
 
         const CSnapShot* Previouse()
           {
