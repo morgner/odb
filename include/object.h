@@ -284,6 +284,10 @@ class CObject : public CRoot
      */
     virtual const CMapReferencing& ParentsGet() const;
     /**
+     *  to prevent chaos
+     */
+    using CRoot::ParentGet;
+    /**
      * returns the Parent by index, CAN RETURN "NULL".
      * @param the index of the parent.
      */

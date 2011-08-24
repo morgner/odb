@@ -6,7 +6,7 @@ SERVER_PATH = .
 
 SERVER_INC = -I$(SERVER_PATH)/include
 
-CFLAGS = -c -mtune=native -Wall -pedantic
+CFLAGS = -c -mtune=native -Wall -pedantic -Woverloaded-virtual
 
 LDFLAGS  = -L.
 
