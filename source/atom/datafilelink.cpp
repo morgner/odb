@@ -29,6 +29,8 @@
 
 #include "generic.h"
 
+#include <string.h> // strlen
+
 #include "atom/datafilelink.h"
 
 using namespace odb;
