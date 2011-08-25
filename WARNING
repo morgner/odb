@@ -19,8 +19,13 @@ I'm sorry for this inconvinience, but regarding that this is an error in an old
 clang version, I will do nothing about the problem but hope that Apple will
 upgrade Lion's clang version soon.
 
+===============================================================================
+
 WRONG!
 
 clang 2.1 was right. See here:
 
 http://www.parashift.com/c++-faq-lite/strange-inheritance.html#faq-23.9
+
+What is explained there, is correct behavior, even if it tarnishes C++ a bit,
+one need to know - that's why this document is kept here.
