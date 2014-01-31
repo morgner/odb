@@ -10,6 +10,7 @@ set(SOURCE application/familytree/main.cpp "")
 project(odb)
 
 add_subdirectory(source)
+add_subdirectory(include)
 include_directories(include)
 
 add_executable(odb.server ${SOURCE})
