@@ -21,3 +21,11 @@ odb.server
 .DS_Store
 
 build
+CMakeCache.txt
+CMakeFiles/
+CMakeScripts/
+cmake_install.cmake
+include/cmake_install.cmake
+odb.build/
+odb.xcodeproj/
+source/cmake_install.cmake
