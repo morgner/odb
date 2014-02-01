@@ -81,7 +81,7 @@ void uiPaintMenu()
 
 void uiSearchAtomInObjectByName()
   {
-  std::cout << "" << std::endl;
+  std::cout << "3 named Atoms on one Object, Hit for Atom 2 and 3" << std::endl;
   std::cout << ">>-------------- creating  ---------------->>" << std::endl;
 
   CObject o(_TEXT("Django"));
@@ -89,7 +89,17 @@ void uiSearchAtomInObjectByName()
   o.AtomAdd( new CAtom( "kalender", 1.202 ) );
   o.AtomAdd( new CAtom( "sender",   1.203 ) );
 
+  CVectorAtom& oAllAtoms = const_cast<CVectorAtom&>(o.AtomsGet());
+  for (auto itAtom : oAllAtoms)
+    {
+    std::cout << "Atom : "  << itAtom->UIFormat()
+              << "; Name: " << itAtom->NameGet()
+              << std::endl;
+    }
+
   std::cout << "<<-------------- searching ----------------<<" << std::endl;
+  std::cout << "Searching for 'ender' in Atom names" << std::endl;
+
 
   CVectorAtom oVA = o.AtomGet("ender", true);
 
@@ -106,7 +116,7 @@ void uiSearchAtomInObjectByName()
 
 void uiSearchAtomInObjectByUserSign()
   {
-  std::cout << "" << std::endl;
+  std::cout << "3 UserMarked Atoms on one Object, Hit for Atom 2 and 3" << std::endl;
   std::cout << ">>-------------- creating  ---------------->>" << std::endl;
 
   CObject o(_TEXT("Django"));
@@ -115,19 +125,23 @@ void uiSearchAtomInObjectByUserSign()
   poAtom = new CAtom( "B", 1.7);  o.AtomAdd( poAtom );  poAtom->UserSignSet(0x0F03);
   poAtom = new CAtom( "C"     );  o.AtomAdd( poAtom );  poAtom->UserSignSet(0x0713);
 
-  CVectorAtom&          oAllAtoms = const_cast<CVectorAtom&>(o.AtomsGet());
-  CVectorAtom::iterator it;
-  for ( it  = oAllAtoms.begin(); it != oAllAtoms.end(); ++it )
+  CVectorAtom& oAllAtoms = const_cast<CVectorAtom&>(o.AtomsGet());
+  for (auto itAtom : oAllAtoms)
     {
-    CMapReferencing& cRM = const_cast<CMapReferencing&>((*it)->ParentGet());
+    CMapReferencing& cRM = const_cast<CMapReferencing&>(itAtom->ParentGet());
     for ( CMapReferencing::iterator itO = cRM.begin(); itO != cRM.end(); ++itO )
       {
-      std::cout << "Atom: " << (*it)->NameGet() << "; RTTI : " << (*it)->InfoGetRtti()
-           << "; Objekt: " << itO->first->NameGet() << "; RTTI : " << itO->first->InfoGetRtti() << std::endl;
+      std::cout << "Atom: "     << itAtom->NameGet()
+                << "; RTTI : "  << itAtom->InfoGetRtti()
+                << "; Objekt: " << itO->first->NameGet()
+                << "; RTTI : "  << itO->first->InfoGetRtti()
+                << "; Check: "  << (itAtom->UserSignGet() & 0x0700)
+                << std::endl;
       } // for ( CMapReferencing::iterator itO = cRM.begin(); itO != cRM.end(); ++itO )
     } // for ( it  = oAllAtoms.begin(); it != oAllAtoms.end(); ++it )
 
   std::cout << "<<-------------- searching ----------------<<" << std::endl;
+  std::cout << "Searching for 0x0700 in Atom UserSigns" << std::endl;
 
 // simple:  CVectorAtom oVA = o.AtomGetBySign((short)0x0F03);
 
@@ -136,9 +150,9 @@ void uiSearchAtomInObjectByUserSign()
 
   std::cout << "<<-------------- dumping   ----------------<<" << std::endl;
 
-  for ( it = oVA.begin(); it != oVA.end(); ++it )
+  for (auto itAtom : oVA)
     {
-    std::cout << (*it)->UIFormat() << std::endl;
+    std::cout << itAtom->NameGet() << " - " << itAtom->UIFormat() << std::endl;
     }
 
   std::cout << "<<-------------- end.      ----------------<<" << std::endl;
@@ -172,7 +186,6 @@ void uiOdbAddData(CODB& odb)
   CAtom* poAtom = odb.NewAtom("Höhe");
   *poAtom = 1.67;
   poAtom->FormatSet("%.2f");
-//  poAtom->FormatSet("%.2f");
   poAtom->PrefixSet("+");
   poAtom->SuffixSet("m");
 
@@ -189,6 +202,7 @@ void uiOdbAddData(CODB& odb)
   odb.Add(poObject3);
 
   poObject ->Link(poObject2, poReason1);
+  poObject ->Link(poObject2, poReason1); // test: double entry should be ignored
   poObject ->Link(poObject3, poReason2);
   poObject2->Link(poObject,  poReason3);
   poObject3->Link(poObject,  poReason3);

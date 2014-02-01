@@ -73,13 +73,13 @@ CODB::~CODB()
 
 void CODB::Dump()
   {
-  for ( iterator it = begin(); it != end(); ++it )
+  for ( auto it : *this )
     {
-    if ( (*it)->InfoGetRtti() == _Object )
+    if ( it->InfoGetRtti() == _Object )
       {
-      ((CObject*)(*it))->Dump();
-      } // if ( (*it)->InfoGetType() == T_Object )
-    } // for ( iterator it = begin(), it != end(); ++it )
+      ((CObject*)it)->Dump();
+      } // if ( it->InfoGetRtti() == _Object )
+    } // for ( auto it : *this )
 
 
   std::cout << "SUMMARY" << std::endl;
@@ -116,15 +116,13 @@ bool CODB::Save(const std::string& sFileName)
     oStream << m_lMaxReason;
     oStream << (long)size();
 
-    for ( inherited::iterator it  = begin();
-                              it != end();
-                            ++it)
+    for (auto itElement : *this)
       {
-      oStream << (long)(*it)->InfoGetRtti();
-      oStream << (long)(*it)->InfoGetRelease();
-      oStream << (long)(*it)->ID();
-      oStream << *(*it);
-      } // for ( inherited::iterator it  = begin();
+      oStream << (long)itElement->InfoGetRtti();
+      oStream << (long)itElement->InfoGetRelease();
+      oStream << (long)itElement->ID();
+      oStream << *itElement;
+      } // for (auto itElement : *this)
     }
   catch (...)
     {
@@ -162,12 +160,10 @@ bool CODB::SaveXML(const std::string& sFileName)
         oStream.Element("things", (long)size());
         oStream.Close();
 
-		for ( inherited::iterator it  = begin();
-                              it != end();
-                            ++it)
+    for (auto itElement : *this)
       {
-      (*it)->Save(oStream);
-      } // for ( inherited::iterator it  = begin();
+      itElement->Save(oStream);
+      } // for (auto itElement : *this)
     oStream.Close();
     }
   catch (...)
@@ -279,13 +275,11 @@ bool CODB::Load(const std::string& sFileName)
 
   // resolve id's to pointers in link tables
   long xxxx = size();
-	for ( iterator it  = begin();
-                 it != end();
-               ++it)
+  for (auto itElement : *this)
     {
     xxxx--;
-    (*it)->ResolveIDs(*this);
-    } // for ( inherited::iterator it  = begin();
+    itElement->ResolveIDs(*this);
+    } // for (auto itElement : *this)
 
   return true;
   } // bool CODB::Save(const std::string& sFileName)
@@ -1007,20 +1001,18 @@ CClass* CODB::ObjectGetClass (const CObject* poObject)
 
 CVectorRoot CODB::ObjectGetChanged( timeval tFromTime )
   {
-	CVectorRoot voResult;
+  CVectorRoot voResult;
 
-  for ( CMapId2PtrObject::iterator it  = m_moId2PtrObject.begin();
-                                   it != m_moId2PtrObject.end();
-                                 ++it )
+  for (auto it : m_moId2PtrObject)
     {
     // ID = -1 is the "NULL-Instance"
-    if ( it->first == -1 ) continue;
+    if ( it.first == -1 ) continue;
     // it->second is the pointer to the instance
-    if ( it->second->TimeStampGet() > tFromTime )
+    if ( it.second->TimeStampGet() > tFromTime )
       {
-      voResult.push_back( it->second );
+      voResult.push_back( it.second );
       }
-    } // for ( CMapId2PtrObject::iterator it  = m_moId2PtrObject.begin();..
+    } // for (auto it : m_moId2PtrObject)
 
   // this makes a copy - I know - we will become thread safe ;-)
   return voResult;
@@ -1028,20 +1020,18 @@ CVectorRoot CODB::ObjectGetChanged( timeval tFromTime )
 
 CVectorRoot CODB::AtomGetChanged( timeval tFromTime )
   {
-	CVectorRoot voResult;
+  CVectorRoot voResult;
 
-  for ( CMapId2PtrAtom::iterator it  = m_moId2PtrAtom.begin();
-                                 it != m_moId2PtrAtom.end();
-                               ++it )
+  for (auto it : m_moId2PtrAtom)
     {
     // ID = -1 is the "NULL-Instance"
-    if ( it->first == -1 ) continue;
+    if ( it.first == -1 ) continue;
     // it->second is the pointer to the instance
-    if ( it->second->TimeStampGet() > tFromTime )
+    if ( it.second->TimeStampGet() > tFromTime )
       {
-      voResult.push_back( it->second );
+      voResult.push_back( it.second );
       }
-    } // for ( CMapId2PtrObject::iterator it  = m_moId2PtrObject.begin();..
+    } // for (auto it : m_moId2PtrAtom)
 
   // this makes a copy - I know - we will become thread safe ;-)
   return voResult;
@@ -1049,22 +1039,19 @@ CVectorRoot CODB::AtomGetChanged( timeval tFromTime )
 
 CVectorRoot CODB::GetThingsChanged( timeval tFromTime )
   {
-	CVectorRoot voResult;
+  CVectorRoot voResult;
 
-  for ( iterator it  = begin();
-                 it != end();
-               ++it )
+  for (auto it : *this)
     {
     // ID = -1 is the "NULL-Instance"
-    if ( (*it)->ID() == -1 ) continue;
+    if ( it->ID() == -1 ) continue;
     // it->second is the pointer to the instance
-    if ( (*it)->TimeStampGet() > tFromTime )
+    if ( it->TimeStampGet() > tFromTime )
       {
-      voResult.push_back( *it );
+      voResult.push_back( it );
       }
-    } // for ( CMapId2PtrObject::iterator it  = m_moId2PtrObject.begin();..
+    } // for (auto it : *this)
 
   // this makes a copy - I know - we will become thread safe ;-)
   return voResult;
   } // CVectorRoot CODB::GetThingsChanged( timeval tFromTime )
-
