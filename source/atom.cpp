@@ -452,8 +452,8 @@ long CAtom::RopeLinkAdd(CRope* poRope, CAtom* poAtomNext)
 
 long CAtom::RopeLinkRemove(CRope* poRope)
   {
-  CMapRope::iterator it = m_moRope.find(poRope);
-  if ( m_moRope.find(poRope) == m_moRope.end() )
+  auto it = m_moRope.find(poRope);
+  if ( it == m_moRope.end() )
     {
     //  the rope is unknown this means:
     // "removing" is successfull - nothings to do => success
@@ -466,8 +466,8 @@ long CAtom::RopeLinkRemove(CRope* poRope)
 
 CAtom* CAtom::RopeLinkNext(CRope* poRope)
   {
-  CMapRope::iterator it = m_moRope.find(poRope);
-  if ( m_moRope.find(poRope) == m_moRope.end() )
+  auto it = m_moRope.find(poRope);
+  if ( it == m_moRope.end() )
     {
     // rope unknown -> no link exists
     return NULL;

@@ -157,7 +157,7 @@ class CODB : public CListRoot
     long      AtomSuffixSet(       CAtom* poAtom,
                              const std::string&   sSuffix );
 
-    std::string    AtomFormatGet( const CAtom* poAtom ) const;
+    std::string     AtomFormatGet ( const CAtom* poAtom ) const;
 
           CRope*    AtomRopeNew   (       CAtom* poAtom );
           long      AtomRopeAppend(       CAtom* poAtom,
@@ -167,7 +167,7 @@ class CODB : public CListRoot
                                     const CRope* poRope );
     const CMapRope& AtomRopeMapGet( const CAtom* poAtom );
 
-    CVectorRoot AtomGetChanged( timeval tFromTime );
+    CVectorRoot     AtomGetChanged( timeval tFromTime );
 
     /****************/
     /* O B  J E C T */
@@ -179,9 +179,9 @@ class CODB : public CListRoot
                                          CObject* poChild   );
     long        ObjectSetClass   (       CObject* poObject,
                                          CClass*  poClass   );
-    CClass*  ObjectGetClass   ( const CObject* poObject  );
+    CClass*     ObjectGetClass   ( const CObject* poObject  );
 
-    CVectorRoot ObjectGetChanged( timeval tFromTime );
+    CVectorRoot ObjectGetChanged ( timeval tFromTime );
 /*
     ObjectGetChildren();
     ObjectGetParents();

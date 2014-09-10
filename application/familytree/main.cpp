@@ -41,11 +41,11 @@ void SearchAtoms(CODB& odb, const std::string& sSearchKey)
   {
   CVectorRoot oVector = odb.GetAtom( sSearchKey );
 
-  std::cout << "SEARCH FOR ATOMS NAMED " << sSearchKey << "; RESULT:" << std::endl;
-  for ( CVectorRoot::iterator itVR = oVector.begin(); itVR != oVector.end(); ++itVR)
+  std::cout << "Search for atoms named " << sSearchKey << "'" << std::endl;
+  for (auto itVR : oVector)
     {
-    std::cout << "ATOM-ID=" << (*itVR)->ID() << ", content= " << ((CAtom*)(*itVR))->UIFormat() << std::endl;
-    }
+    std::cout << "ATOM-ID=" << itVR->ID() << ", content=" << ((CAtom*)itVR)->UIFormat() << std::endl;
+    } // for (auto itVR : oVector)
   std::cout << std::endl;
   } // void SearchAtoms(const string& sSearchKey)
 
@@ -54,13 +54,13 @@ void SearchObjects(CODB& odb, const std::string& sSearchKey)
   {
   CVectorRoot oVector = odb.GetObject( sSearchKey );
 
-  std::cout << "SEARCH FOR OBJECTS NAMED " << sSearchKey << "; RESULT:" << std::endl;
-  for ( CVectorRoot::iterator itVR = oVector.begin(); itVR != oVector.end(); ++itVR)
+  std::cout << "Search for objects named '" << sSearchKey << "'" << std::endl;
+  for (auto itVR : oVector)
     {
-    std::cout << "ID=" << (*itVR)->ID() << std::endl;
-    }
+    std::cout << "OBJ-ID=" << itVR->ID() << ", name=" << itVR->NameGet() << std::endl;
+    } // for (auto itVR : oVector)
   std::cout << std::endl;
-  } // void SearchAtoms(const string& sSearchKey)
+  } // void SearchObjects(CODB& odb, const std::string& sSearchKey)
 
 void uiPaintMenu()
   {
@@ -74,10 +74,12 @@ void uiPaintMenu()
   std::cout << "7) Search Atoms by UserSign inside a known single object" << std::endl;
   std::cout << "8) Get binary data from an atom" << std::endl;
   std::cout << "9) Add objects with fixed IDs (to the empty odb)" << std::endl;
+  std::cout << "a) Search odb for Atoms by Atom name" << std::endl;
+  std::cout << "b) Search odb for Objects by Object name" << std::endl;
   std::cout << "------------------------------" << std::endl;
   std::cout << "Q) Quit" << std::endl;
   std::cout << "X) eXit" << std::endl;
- }
+  }
 
 void uiSearchAtomInObjectByName()
   {
@@ -95,7 +97,7 @@ void uiSearchAtomInObjectByName()
     std::cout << "Atom : "  << itAtom->UIFormat()
               << "; Name: " << itAtom->NameGet()
               << std::endl;
-    }
+    } // for (auto itAtom : oAllAtoms)
 
   std::cout << "<<-------------- searching ----------------<<" << std::endl;
   std::cout << "Searching for 'ender' in Atom names" << std::endl;
@@ -105,10 +107,12 @@ void uiSearchAtomInObjectByName()
 
   std::cout << "<<-------------- dumping   ----------------<<" << std::endl;
 
-  for ( CVectorAtom::iterator it = oVA.begin(); it != oVA.end(); ++it )
+  for (auto it : oVA)
     {
-    std::cout << (*it)->UIFormat() << std::endl;
-    }
+    std::cout << "Atom : "  << it->UIFormat()
+              << "; Name: " << it->NameGet()
+              << std::endl;
+    } // for (auto it : oVA)
 
   std::cout << "<<-------------- end.      ----------------<<" << std::endl;
   std::cout << std::endl;
@@ -128,17 +132,17 @@ void uiSearchAtomInObjectByUserSign()
   CVectorAtom& oAllAtoms = const_cast<CVectorAtom&>(o.AtomsGet());
   for (auto itAtom : oAllAtoms)
     {
-    CMapReferencing& cRM = const_cast<CMapReferencing&>(itAtom->ParentGet());
-    for ( CMapReferencing::iterator itO = cRM.begin(); itO != cRM.end(); ++itO )
+    CMapReferencing& oRM = const_cast<CMapReferencing&>(itAtom->ParentGet());
+    for (auto itRObj : oRM)
       {
       std::cout << "Atom: "     << itAtom->NameGet()
                 << "; RTTI : "  << itAtom->InfoGetRtti()
-                << "; Objekt: " << itO->first->NameGet()
-                << "; RTTI : "  << itO->first->InfoGetRtti()
+                << "; Objekt: " << itRObj.first->NameGet()
+                << "; RTTI : "  << itRObj.first->InfoGetRtti()
                 << "; Check: "  << (itAtom->UserSignGet() & 0x0700)
                 << std::endl;
-      } // for ( CMapReferencing::iterator itO = cRM.begin(); itO != cRM.end(); ++itO )
-    } // for ( it  = oAllAtoms.begin(); it != oAllAtoms.end(); ++it )
+      } // for (auto itRObj : oRM)
+    } // for (auto itAtom : oAllAtoms)
 
   std::cout << "<<-------------- searching ----------------<<" << std::endl;
   std::cout << "Searching for 0x0700 in Atom UserSigns" << std::endl;
@@ -369,6 +373,17 @@ int main (int argc, char * const argv[])
           }
         break;
 
+      case 'a': // SEARCH ATOMS BY NAME
+        SearchAtoms(*pOdb, _TEXT("Vorname") );
+        SearchAtoms(*pOdb, _TEXT("Name") );
+        break;
+
+      case 'b': // SEARCH OBJECTS BY NAME
+        SearchObjects(*pOdb, _TEXT("Ilse Werder-Gross") );
+        SearchObjects(*pOdb, _TEXT("Mario Werder") );
+        break;
+
+              
       case 'Q':
       case 'q':
       case 'X':
