@@ -39,25 +39,25 @@ using namespace odb;
 
 void SearchAtoms(CODB& odb, const std::string& sSearchKey)
   {
-  CVectorRoot oVector = odb.GetAtom( sSearchKey );
-
   std::cout << "Search for atoms named " << sSearchKey << "'" << std::endl;
-  for (auto itVR : oVector)
+
+  CVectorRoot oVector = odb.GetAtom( sSearchKey );
+  for (auto it : oVector)
     {
-    std::cout << "ATOM-ID=" << itVR->ID() << ", content=" << ((CAtom*)itVR)->UIFormat() << std::endl;
-    } // for (auto itVR : oVector)
+    std::cout << "ATOM-ID=" << it->ID() << ", content=" << ((CAtom*)it)->UIFormat() << std::endl;
+    } // for (auto it : oVector)
   std::cout << std::endl;
-  } // void SearchAtoms(const string& sSearchKey)
+  } // void SearchAtoms(CODB& odb, const std::string& sSearchKey)
 
 
 void SearchObjects(CODB& odb, const std::string& sSearchKey)
   {
-  CVectorRoot oVector = odb.GetObject( sSearchKey );
-
   std::cout << "Search for objects named '" << sSearchKey << "'" << std::endl;
-  for (auto itVR : oVector)
+
+  CVectorRoot oVector = odb.GetObject( sSearchKey );
+  for (auto it : oVector)
     {
-    std::cout << "OBJ-ID=" << itVR->ID() << ", name=" << itVR->NameGet() << std::endl;
+    std::cout << "OBJ-ID=" << it->ID() << ", name=" << it->NameGet() << std::endl;
     } // for (auto itVR : oVector)
   std::cout << std::endl;
   } // void SearchObjects(CODB& odb, const std::string& sSearchKey)
@@ -199,7 +199,7 @@ void uiOdbAddData(CODB& odb)
   poObject2->AtomAdd( odb.Add(new CAtom(_TEXT("Strasse"), _TEXT("Kleine Gasse 1"))) );
 
 
-  CObject* poObject3 = new CObject(_TEXT(""), poClassAdr);
+  CObject* poObject3 = new CObject(_TEXT("Alfons Gross"), poClassAdr);
   poObject3->AtomAdd( odb.Add(new CAtom(_TEXT("Vorname"), _TEXT("Alfons"))) );
   poObject3->AtomAdd( odb.Add(new CAtom(_TEXT("Name"), _TEXT("Gross"))) );
 

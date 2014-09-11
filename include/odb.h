@@ -58,11 +58,10 @@ namespace odb {
 class CODB : public CListRoot
   {
   /*
-      "friend" declarations
-      necessary for access to protected members
-      that will be needed for some internal (automatic)
-      operations (as Is2Ptr) that are to protected
-      because wrong use stops the whole kernel
+     "friend" declarations
+     necessary for access to protected members which will be necessary for some
+     internal (automatic) operations (as Id2Ptr) which are protected because
+     wrong use crashes the whole database
   */
   friend class odb::CRoot;
   friend class odb::CClass;
@@ -75,8 +74,6 @@ class CODB : public CListRoot
     typedef CListRoot inherited;
 
   protected:
-    static std::string s_sEmptyString;
-
     std::string m_sFileName;
 
   public:

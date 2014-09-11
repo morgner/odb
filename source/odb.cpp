@@ -35,8 +35,6 @@
 
 using namespace odb;
 
-std::string CODB::s_sEmptyString = _TEXT(""); /**< an empty string for universal use, especially for assignment and comparsion. */
-
 /**
  * The comparsion operator for 'timeval' values.
  * used for lists sorted by the modification time of 'things'. This may be
@@ -53,10 +51,10 @@ bool operator > (const timeval& t1, const timeval& t2)
 //------------------------------------------------------------------//
 
 /**
- * The odb contructor.
+ * The odb constructor.
  * initializes all base values for a odb instance. The maximum values are used
  * to give 'things' a identification.
- * @param sFileName The filename the odb is stored to and/or read from. It's an almost simple stream.
+ * @param sFileName The filename the odb is stored to and/or read from.
  */
 CODB::CODB(const std::string& sFileName)
   {
@@ -67,19 +65,27 @@ CODB::CODB(const std::string& sFileName)
   m_lMaxReason = -1;
   } // CODB::CODB(const std::string& sFileName)
 
+/**
+ * The odb destructor.
+ */
 CODB::~CODB()
   {
   } // CODB::~CODB()
 
+/**
+ * Dump.
+ * Dumps the whole database to std::cout and concludes the output with a
+ * simple overview of how many of which objects are exsiting in the db.
+ */
 void CODB::Dump()
   {
-  for ( auto it : *this )
+  for (auto it : *this)
     {
     if ( it->InfoGetRtti() == _Object )
       {
       ((CObject*)it)->Dump();
       } // if ( it->InfoGetRtti() == _Object )
-    } // for ( auto it : *this )
+    } // for (auto it : *this)
 
 
   std::cout << "SUMMARY" << std::endl;
