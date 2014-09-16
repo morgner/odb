@@ -2,7 +2,7 @@
                           keyname.cpp  -  description
                              -------------------
     begin                : Thu Mar 23 2000
-    copyright            : (C) 2000..2005 by Manfred Morgner
+    copyright            : (C) 2000..2014 by Manfred Morgner
     email                : manfred@morgner.com
  ***************************************************************************/
 
