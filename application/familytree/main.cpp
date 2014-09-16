@@ -2,7 +2,7 @@
                           main.cpp
                           -------------------
     begin                : Fri Mar 3 18:49:53 CET 2000
-    copyright            : (C) 1993..2011 by Manfred Morgner
+    copyright            : (C) 1993..2014 by Manfred Morgner
     email                : manfred@morgner.com
  ***************************************************************************/
 
