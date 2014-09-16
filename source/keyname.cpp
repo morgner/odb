@@ -43,20 +43,12 @@ CKeyName::~CKeyName()
 
 CVectorRoot::iterator CKeyName::find(CRoot* poItem)
   {
-  iterator it = begin();
-/*
-  while ( (it != end()) && (*it != poItem) )
-    {
-    ++it;
-    }
-*/
-
-  for ( it = begin(); it != end(); ++it )
+  for ( iterator it = begin(); it != end(); ++it )
     {
     if ( *it == poItem )
       {
-      break;
+      return it;
       }
     }
-  return it;
+  return end();
   } // CKeyName::iterator CKeyName::find(CRoot* poItem)

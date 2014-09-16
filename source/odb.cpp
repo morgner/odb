@@ -79,13 +79,13 @@ CODB::~CODB()
  */
 void CODB::Dump()
   {
-  for (auto it : *this)
+  for (auto const &it : *this)
     {
     if ( it->InfoGetRtti() == _Object )
       {
       ((CObject*)it)->Dump();
       } // if ( it->InfoGetRtti() == _Object )
-    } // for (auto it : *this)
+    } // for (auto const &it : *this)
 
 
   std::cout << "SUMMARY" << std::endl;
@@ -122,13 +122,13 @@ bool CODB::Save(const std::string& sFileName)
     oStream << m_lMaxReason;
     oStream << (long)size();
 
-    for (auto itElement : *this)
+    for (auto const &itElement : *this)
       {
       oStream << (long)itElement->InfoGetRtti();
       oStream << (long)itElement->InfoGetRelease();
       oStream << (long)itElement->ID();
       oStream << *itElement;
-      } // for (auto itElement : *this)
+      } // for (auto const &itElement : *this)
     }
   catch (...)
     {
@@ -166,10 +166,10 @@ bool CODB::SaveXML(const std::string& sFileName)
         oStream.Element("things", (long)size());
         oStream.Close();
 
-    for (auto itElement : *this)
+    for (auto const &itElement : *this)
       {
       itElement->Save(oStream);
-      } // for (auto itElement : *this)
+      } // for (auto const &itElement : *this)
     oStream.Close();
     }
   catch (...)
@@ -281,11 +281,11 @@ bool CODB::Load(const std::string& sFileName)
 
   // resolve id's to pointers in link tables
   long xxxx = size();
-  for (auto itElement : *this)
+  for (auto const &itElement : *this)
     {
     xxxx--;
     itElement->ResolveIDs(*this);
-    } // for (auto itElement : *this)
+    } // for (auto const &itElement : *this)
 
   return true;
   } // bool CODB::Save(const std::string& sFileName)
@@ -448,10 +448,10 @@ long CODB::ChangeName(CRope* poSrc, const std::string& sNewName)
 long CODB::KeyNameIndexItemAdd(CKeyNameIndex& rsoKeyNameIndex, CRoot* poItem)
   {
   CKeyName oKeyName( poItem->NameGet() );
-  CKeyNameIndex::iterator it = rsoKeyNameIndex.find( &oKeyName );
+  auto it = rsoKeyNameIndex.find( &oKeyName );
   if ( it == rsoKeyNameIndex.end() )
     {
-    CKeyName* poKeyName = new CKeyName(poItem->NameGet());
+    CKeyName* poKeyName = new CKeyName( oKeyName );
     std::pair<CKeyNameIndex::iterator, bool> oResult = rsoKeyNameIndex.insert( poKeyName );
     it = oResult.first;
     if ( oResult.second == false )
@@ -1009,7 +1009,7 @@ CVectorRoot CODB::ObjectGetChanged( timeval tFromTime )
   {
   CVectorRoot voResult;
 
-  for (auto it : m_moId2PtrObject)
+  for (auto const &it : m_moId2PtrObject)
     {
     // ID = -1 is the "NULL-Instance"
     if ( it.first == -1 ) continue;
@@ -1018,7 +1018,7 @@ CVectorRoot CODB::ObjectGetChanged( timeval tFromTime )
       {
       voResult.push_back( it.second );
       }
-    } // for (auto it : m_moId2PtrObject)
+    } // for (auto const &it : m_moId2PtrObject)
 
   // this makes a copy - I know - we will become thread safe ;-)
   return voResult;
@@ -1028,7 +1028,7 @@ CVectorRoot CODB::AtomGetChanged( timeval tFromTime )
   {
   CVectorRoot voResult;
 
-  for (auto it : m_moId2PtrAtom)
+  for (auto const &it : m_moId2PtrAtom)
     {
     // ID = -1 is the "NULL-Instance"
     if ( it.first == -1 ) continue;
@@ -1037,7 +1037,7 @@ CVectorRoot CODB::AtomGetChanged( timeval tFromTime )
       {
       voResult.push_back( it.second );
       }
-    } // for (auto it : m_moId2PtrAtom)
+    } // for (auto const &it : m_moId2PtrAtom)
 
   // this makes a copy - I know - we will become thread safe ;-)
   return voResult;
@@ -1047,7 +1047,7 @@ CVectorRoot CODB::GetThingsChanged( timeval tFromTime )
   {
   CVectorRoot voResult;
 
-  for (auto it : *this)
+  for (auto const &it : *this)
     {
     // ID = -1 is the "NULL-Instance"
     if ( it->ID() == -1 ) continue;
@@ -1056,7 +1056,7 @@ CVectorRoot CODB::GetThingsChanged( timeval tFromTime )
       {
       voResult.push_back( it );
       }
-    } // for (auto it : *this)
+    } // for (auto const &it : *this)
 
   // this makes a copy - I know - we will become thread safe ;-)
   return voResult;

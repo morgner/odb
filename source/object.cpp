@@ -185,10 +185,10 @@ CStream& CObject::Save(CStream& oStream)
     // atom list
     oStream.Open("atoms");
 //    oStream.Element("count", (long) m_aoAtoms.size());
-    for (auto itAtom : m_aoAtoms)
+    for (auto const &itAtom : m_aoAtoms)
       {
       oStream.Element("atom", itAtom->ID());
-      } // for (auto itAtom : m_aoAtoms)
+      } // for (auto const &itAtom : m_aoAtoms)
     oStream.Close();
     } // if ( m_aoAtoms.size() > 0 )
 
@@ -198,19 +198,19 @@ CStream& CObject::Save(CStream& oStream)
     oStream.Open("children");
 //    oStream.Element("count", (long)m_moChildren.size());
 
-    for (auto itChild : m_moChildren)
+    for (auto const &itChild : m_moChildren)
       {
       oStream.Open("child");
         oStream.Element("id", itChild.first->ID());    // the child
         oStream.Open("reasons");
 //        oStream.Element("count", (long)it->second->size()); // the count of link reasons for this cild
-          for (auto itReason : *itChild.second)
+          for (auto const &itReason : *itChild.second)
             {
             oStream.Element("reason", itReason->ID());
-            } // for (auto itReason : itChild.second)
+            } // for (auto const &itReason : itChild.second)
           oStream.Close();
         oStream.Close();
-      } // for (auto itChild : m_moChildren)
+      } // for (auto const &itChild : m_moChildren)
     oStream.Close();
     } // if ( m_moChildren.size() > 0 )
 
@@ -265,38 +265,40 @@ bool CObject::ResolveIDs(CODB& oDB)
 
   // remap the atom list
   CVectorAtom aoAtoms;
-  for (auto itAtom : m_aoAtoms)
+  for (auto const &itAtom : m_aoAtoms)
     {
     // replace the surrogate with the real pointer
     aoAtoms.push_back( oDB.Id2Ptr(itAtom) );
-    } // for (auto itAtom : m_aoAtoms)
+    } // for (auto const &itAtom : m_aoAtoms)
   m_aoAtoms.swap(aoAtoms);
 
   // remap the child-reasons-map
   //
   // DO NOT TRY TO REMAP THE TRUE MAP IN ONE STEP USING THE ITERATOR !!
-  // because this will be an unsure operation. The map is is a "unique-map"
-  // while remapping may appear some duplicate key:
+  // because this will be an unsure operation. The map is a "unique-map"
+  // during remapping some duplicate key may appear:
   // the "surrogate-key" will be replaced by the true pointer, this
   // translates a long value to a pointer value = 32bit int -> 32bit int
   CMapChildren moChildren;
-  for (auto itChild : m_moChildren)
+  for (CMapChildren::iterator itChild=m_moChildren.begin();
+                              itChild!=moChildren.end();
+                            ++itChild)
     {
     // remap the list of reasons
     CListReason* ploReasons = new CListReason;
-    for (auto itReason : *itChild.second)
+    for (auto const &itReason : *itChild->second)
       {
       ploReasons->insert( oDB.Id2Ptr(itReason) );
-      } // for (auto itReason : *itChild.second)
+      } // for (auto const &itReason : *itChild->second)
 
     // delete it->second because it was allocated while loading
-    delete itChild.second;
-    itChild.second = 0;
+    delete itChild->second;
+    itChild->second = 0;
 
     // append the remapped child with his remapped (link-)reasons
     //  to the temporary map
-    moChildren[oDB.Id2Ptr(itChild.first)] = ploReasons;
-    } // for (auto itChild : m_moChildren)
+    moChildren[oDB.Id2Ptr(itChild->first)] = ploReasons;
+    } // for (CMapChildren::iterator itChild=m_moChildren.begin(); ...
   // assign the temporary child-reasons-map to the true one
 
   m_moChildren = moChildren;
@@ -349,7 +351,7 @@ bool CObject::LinkRemove(const CObject* poChildObject, const CReason* poReason)
     }
 
   // find the child that has to remove
-  auto itChild = m_moChildren.find(const_cast<CObject*>(poChildObject));
+  auto const &itChild = m_moChildren.find(const_cast<CObject*>(poChildObject));
   if ( itChild == m_moChildren.end() )
     {
     // the link could not removed because the reason was not found
@@ -357,7 +359,7 @@ bool CObject::LinkRemove(const CObject* poChildObject, const CReason* poReason)
     } // if ( it == m_moChildren.end() )
 
   CListReason* ploReason = itChild->second;
-  auto itReason = std::find(ploReason->begin(), ploReason->end(), poReason);
+  auto const &itReason = std::find(ploReason->begin(), ploReason->end(), poReason);
   if ( *itReason == poReason )
     {
     ploReason->erase(itReason);
@@ -373,7 +375,7 @@ bool CObject::LinkRemove(const CObject* poChildObject, const CReason* poReason)
     // success - the link-reason was found and removed
     TimeStampUpdate();
     return true;
-    } // if ( itReason == poReason )
+    } // if ( *itReason == poReason )
 
   // the link could not removed because the reason was not found
   return false;
@@ -394,7 +396,7 @@ const CAtom* CObject::AtomAdd(CAtom* poAtom, long lOrdinal)
     return NULL;
     }
 
-  auto itAtom = std::find(m_aoAtoms.begin(), m_aoAtoms.end(), poAtom);
+  auto const &itAtom = std::find(m_aoAtoms.begin(), m_aoAtoms.end(), poAtom);
   if ( itAtom != m_aoAtoms.end() )
     {
     if (lOrdinal >= 0)
@@ -454,13 +456,13 @@ CAtom* CObject::AtomGet(long nIndex)
 CVectorAtom CObject::AtomGetBySign(long nSign, long nSignMask)
   {
   CVectorAtom oVectorAtom;
-  for (auto itAtom : m_aoAtoms)
+  for (auto const &itAtom : m_aoAtoms)
     {
     if ( (itAtom->UserSignGet() & nSignMask) == nSign )
       {
       oVectorAtom.push_back(itAtom);
       } // if ( (*it)->UserSignGet() & nSignMask == nSign )
-    } // for (auto itAtom : m_aoAtoms)
+    } // for (auto const &itAtom : m_aoAtoms)
 
   // this copies the result, because we have to be thread safe.
   return oVectorAtom;
@@ -470,7 +472,7 @@ CVectorAtom CObject::AtomGetBySign(long nSign, long nSignMask)
 CVectorAtom CObject::AtomGet(const std::string& sName, bool bPartial)
   {
   CVectorAtom oVectorAtom;
-  for (auto itAtom : m_aoAtoms)
+  for (auto const &itAtom : m_aoAtoms)
     {
     if ( bPartial == true )
       {
@@ -486,7 +488,7 @@ CVectorAtom CObject::AtomGet(const std::string& sName, bool bPartial)
         oVectorAtom.push_back(itAtom);
         }
       } // else if ( bPartial == true )
-    } // for (auto itAtom : m_aoAtoms)
+    } // for (auto const &itAtom : m_aoAtoms)
 
   // this copies the result, because we have to be thread safe.
   return oVectorAtom;
@@ -509,14 +511,14 @@ const CAtom* CObject::operator -= (CAtom* src)
 /// AtomRemove
 const CAtom* CObject::AtomRemove(CAtom* poAtom)
   {
-  auto itAtom = std::find(m_aoAtoms.begin(), m_aoAtoms.end(), poAtom);
+  auto const &itAtom = std::find(m_aoAtoms.begin(), m_aoAtoms.end(), poAtom);
   if ( *itAtom == poAtom )
     {
     m_aoAtoms.erase(itAtom);
     poAtom->ReferenceRemoved(this);
     TimeStampUpdate();
     return poAtom;
-    } // if ( *it == &oAtom )
+    } // if ( *itAtom == poAtom )
 
   return NULL;
   } // long CObject::AtomRemove(CAtom& oAtom)
@@ -631,36 +633,36 @@ void CObject::Dump()
     } // if (m_poClass)
 
   // children list
-  for (auto itChild : m_moChildren)
+  for (auto const &itChild : m_moChildren)
     {
     std::cout << l5 << itChild.first->ID()                                << std::endl;
     std::cout << l6 << itChild.first->NameGet()                           << std::endl;
     std::cout << l7 << ((CObject*)(itChild.first))->ClassGet()->NameGet() << std::endl;
 
-    for (auto itReason : *itChild.second)
+    for (auto const &itReason : *itChild.second)
       {
       std::cout << l8 << itReason->ID()      << std::endl;
       std::cout << l9 << itReason->NameGet() << std::endl;
-      } // for (auto itReason : *itChild.second)
-    } // for (auto itChild : m_moChildren)
+      } // for (auto const &itReason : *itChild.second)
+    } // for (auto const &itChild : m_moChildren)
 
   // parent list
-  for (auto itR : m_moReferencingInstances)
+  for (auto const &itR : m_moReferencingInstances)
     {
     std::cout << la << itR.first->ID()                              << std::endl;
     std::cout << lb << itR.first->NameGet()                         << std::endl;
     std::cout << lc << ((CObject*)itR.first)->ClassGet()->NameGet() << std::endl;
-    } // for (auto itR : m_moReferencingInstances)
+    } // for (auto const &itR : m_moReferencingInstances)
 
   // atom list
   std::cout << l0 << std::endl;
-  for (auto itAtom : m_aoAtoms)
+  for (auto const &itAtom : m_aoAtoms)
     {
     std::cout << "        " << itAtom->NameGet() << "\t";
     std::cout << "<"        << itAtom->PrefixGet() << "> ";
     std::cout               << itAtom->UIFormat();
     std::cout << " ["       << itAtom->SuffixGet() << "]" << std::endl;
-    } // (auto itAtom : m_aoAtoms)
+    } // (auto const &itAtom : m_aoAtoms)
 
   std::cout << std::endl;
   std::cout.flush();
