@@ -89,7 +89,7 @@ class CStream
 //    CStream& operator << (           bool     data);  /**< Writes a 'bool' values to the stream */
     CStream& operator << (      odb::CRoot&   data); /**< Writes another object to the stream */
     CStream& operator << (const std::string&  data); /**< Writes any string to the stream */
-    CStream& operator << (const      char*    data); /**< Writes any string to the stream */
+//    CStream& operator << (const      char*    data); /**< Writes any string to the stream */
     CStream& operator << (           double   data); /**< Writes a 'double' values to the stream */
     CStream& operator << (           timeval  data); /**< Writes a 'timeval' values to the stream */
 

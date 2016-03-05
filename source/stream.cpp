@@ -224,10 +224,12 @@ CStream& CStream::operator >> (std::string& data)
   return *this;
   }
 
+/*
 CStream& CStream::operator << (const char* data)
   {
   return operator << ( (const std::string&) data);
   }
+*/
 
 CStream& CStream::operator << (const std::string& data)
   {
