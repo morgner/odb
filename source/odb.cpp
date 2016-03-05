@@ -115,7 +115,7 @@ bool CODB::Save(const std::string& sFileName)
     {
     CStream oStream(m_sFileName, true);
 
-    oStream << *(long*)"ODBF";
+    oStream << uint32_t('ODBF');
     oStream << m_lMaxClass;
     oStream << m_lMaxAtom;
     oStream << m_lMaxObject;
@@ -203,11 +203,14 @@ bool CODB::Load(const std::string& sFileName)
     {
     CStream oStream(m_sFileName);
     long       lRTTI;
-    long       lSign;
+    uint32_t   lSign;
     long       lCount;
     CRoot*  poEntry = 0;
 
-    oStream >> lSign;
+    oStream >> lSign;         // if cast to char[4] has to be 'ODBF'
+
+    if ( lSign != uint32_t('ODBF') ) throw "Invalid File Signatur";
+
     oStream >> m_lMaxClass;
     oStream >> m_lMaxAtom;
     oStream >> m_lMaxObject;

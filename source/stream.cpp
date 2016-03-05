@@ -114,6 +114,31 @@ CStream& CStream::Write(void* pData, unsigned long ulSize)
   return *this;
   } // bool CStream::Write(void* pData, unsigned long ulSize)
 
+CStream& CStream::operator >> (uint32_t& data)
+  {
+  try
+    {
+    Read(&data, sizeof(data));
+    }
+  catch (...)
+    {
+    //    e->Delete();
+    }
+  return *this;
+  }
+
+CStream& CStream::operator << (uint32_t data)
+  {
+  try
+    {
+    Write(&data, sizeof(data));
+    }
+  catch (...)
+    {
+    //    e->Delete();
+    }
+  return *this;
+  }
 
 CStream& CStream::operator >> (long& data)
   {

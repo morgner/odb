@@ -68,12 +68,13 @@ class CStream
     bool Seek(long lPosition);
 
     // reading operators
-    CStream& operator >> (     long&    data); /**< Reads a 'long' values from the stream */
-    CStream& operator >> (     bool&    data); /**< Reads a 'bool' values from the stream */
-    CStream& operator >> (odb::CRoot&   data); /**< Reads a another object from the stream */
-    CStream& operator >> (std::string&  data); /**< Reads a std::string from the stream */
-    CStream& operator >> (     double&  data); /**< Reads a 'double' values from the stream */
-    CStream& operator >> (     timeval& data); /**< Reads a 'timeval' values from the stream */
+    CStream& operator >> (     uint32_t& data); /**< Reads a 'uint32_t' values from the stream */
+    CStream& operator >> (     long&     data); /**< Reads a 'long' values from the stream */
+    CStream& operator >> (     bool&     data); /**< Reads a 'bool' values from the stream */
+    CStream& operator >> (odb::CRoot&    data); /**< Reads a another object from the stream */
+    CStream& operator >> (std::string&   data); /**< Reads a std::string from the stream */
+    CStream& operator >> (     double&   data); /**< Reads a 'double' values from the stream */
+    CStream& operator >> (     timeval&  data); /**< Reads a 'timeval' values from the stream */
 
     CStream& Read(void* pData, unsigned long ulSize); /**< Reads binary data from the stream */
 
@@ -83,13 +84,14 @@ class CStream
 */
 
     /// writing operators
-    CStream& operator << (           long    data); /**< Writes a 'long' values to the stream */
-//    CStream& operator << (           bool    data); /**< Writes a 'bool' values to the stream */
-    CStream& operator << (      odb::CRoot&  data); /**< Writes another object to the stream */
-    CStream& operator << (const std::string& data); /**< Writes any string to the stream */
-    CStream& operator << (const      char*   data); /**< Writes any string to the stream */
-    CStream& operator << (           double  data); /**< Writes a 'double' values to the stream */
-    CStream& operator << (           timeval data); /**< Writes a 'timeval' values to the stream */
+    CStream& operator << (           uint32_t data); /**< Writes a 'uint32_t' values to the stream */
+    CStream& operator << (           long     data); /**< Writes a 'long' values to the stream */
+//    CStream& operator << (           bool     data);  /**< Writes a 'bool' values to the stream */
+    CStream& operator << (      odb::CRoot&   data); /**< Writes another object to the stream */
+    CStream& operator << (const std::string&  data); /**< Writes any string to the stream */
+    CStream& operator << (const      char*    data); /**< Writes any string to the stream */
+    CStream& operator << (           double   data); /**< Writes a 'double' values to the stream */
+    CStream& operator << (           timeval  data); /**< Writes a 'timeval' values to the stream */
 
     CStream& Write(void* pData, unsigned long ulSize); /**< Writes binary data to the stream */
 
