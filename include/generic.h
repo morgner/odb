@@ -35,6 +35,7 @@
 #include <map>
 #include <iostream>
 #include <fstream>
+#include <memory>   // make_unique
 
 namespace odb
   {

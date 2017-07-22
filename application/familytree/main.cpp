@@ -218,21 +218,19 @@ void uiOdbAddData(CODB& odb)
 int main (int argc, char * const argv[])
 //int main(int argc, char *argv[])
   {
-  char asz[255];
-  asz[0] = '0';
-  CODB* pOdb = new CODB;
-  bool bRun = true;
-  while (bRun == true)
+  char c{};
+  auto pOdb = std::make_unique<CODB>();
+  bool bRun{true};
+  while (bRun)
     {
     uiPaintMenu();
-    std::cin >> asz[0];
+    std::cin >> c;
     std::cout << std::endl;
-    switch ( asz[0] )
+    switch ( c )
       {
       case '0': // INIT
         std::cout << "Initialize odb" << std::endl;
-        delete pOdb;
-        pOdb = new CODB;
+        pOdb = std::make_unique<CODB>();
         break;
 
       case '1': // ADD DATA
@@ -273,10 +271,9 @@ int main (int argc, char * const argv[])
 
       case '4': // LOAD
         std::cout << "Load odb" << std::endl;
+        pOdb = std::make_unique<CODB>();
         try
           {
-          delete pOdb;
-          pOdb = new CODB;
           pOdb->Load("torre.odb");
           }
         catch(...)
@@ -351,11 +348,9 @@ int main (int argc, char * const argv[])
 
       case '9': // ADD OBJECT USING PREDEFINED ID
         std::cout << "Add objects with fixed IDs (to the empty odb)" << std::endl << std::endl;
+        pOdb = std::make_unique<CODB>();
         try
           {
-          delete pOdb;
-          pOdb = new CODB;
-
           CObject* poObject = new CObject(1234, false);
           std::cout << "  1) ID before Add().....: " << poObject->ID() << std::endl;
 
@@ -391,7 +386,7 @@ int main (int argc, char * const argv[])
         std::cout << "Leave demo" << std::endl;
         bRun = false;
         break;
-      } // switch asz[0]
+      } // switch c
     } // while (1)
 
 /*

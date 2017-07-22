@@ -111,7 +111,7 @@ std::string CAtomDataString::UIFormat(const std::string& sFormat)
   char* psz = new char(m_Data.length() + sFormat.length());
   sprintf(psz, sFormat.c_str(), m_Data.c_str());
   std::string s = psz;
-  delete [] psz;
+  delete psz;
 
   return s;
   } // string CAtomDataString::UIFormat(const string& sFormat)
