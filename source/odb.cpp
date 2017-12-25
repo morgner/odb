@@ -6,26 +6,6 @@
     email                : manfred@morgner.com
  ***************************************************************************/
 
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, write to the                         *
- *                                                                         *
- *   Free Software Foundation, Inc.,                                       *
- *   59 Temple Place Suite 330,                                            *
- *   Boston, MA  02111-1307, USA.                                          *
- *                                                                         *
- ***************************************************************************/
 
 #include "generic.h"
 
@@ -115,7 +95,7 @@ bool CODB::Save(const std::string& sFileName)
     {
     CStream oStream(m_sFileName, true);
 
-    oStream << uint32_t('ODBF');
+    oStream << ODBF;
     oStream << m_lMaxClass;
     oStream << m_lMaxAtom;
     oStream << m_lMaxObject;
@@ -153,8 +133,8 @@ bool CODB::SaveXML(const std::string& sFileName)
     {
     CStream    oStream(m_sFileName, true);
 //    CStreamXML oStream(m_sFileName, true);
-    
-    oStream.Element("type", "ODBF"); 
+
+    oStream.Element("type", ODBF);
     oStream.Open("odb");
       oStream.Open("maximum");
         oStream.Element("class",   m_lMaxClass);
@@ -191,7 +171,7 @@ bool CODB::Load(const std::string& sFileName)
     return false;
     }
 
-  // this is for Id2Ptr-Resolution if Id is -1 
+  // this is for Id2Ptr-Resolution if Id is -1
   // -> not present during saving while loading
   // -1 in the file means "NULL-Pointer"
   m_moId2PtrClass [-1] = 0; // (CClass* )NULL
@@ -202,14 +182,14 @@ bool CODB::Load(const std::string& sFileName)
   try
     {
     CStream oStream(m_sFileName);
-    long       lRTTI;
-    uint32_t   lSign;
-    long       lCount;
-    CRoot*  poEntry = 0;
+    long   lRTTI;
+    long   lSign;
+    long   lCount;
+    CRoot* poEntry = 0;
 
     oStream >> lSign;         // if cast to char[4] has to be 'ODBF'
 
-    if ( lSign != uint32_t('ODBF') ) throw "Invalid File Signatur";
+    if ( lSign != ODBF ) throw "Invalid File Signatur";
 
     oStream >> m_lMaxClass;
     oStream >> m_lMaxAtom;
@@ -225,7 +205,7 @@ bool CODB::Load(const std::string& sFileName)
 /*
 <!--
  -->
- 
+
 <odb>
   <defaults release="1">
   <class id="7" name="Person" format="%s" class="6" omal="10"/>

@@ -1,3 +1,6 @@
+#ifndef __ATOM_H
+#define __ATOM_H
+
 /***************************************************************************
                           atom.h
                           -------------------
@@ -6,32 +9,9 @@
     email                : manfred@morgner.com
  ***************************************************************************/
 
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, write to the                         *
- *                                                                         *
- *   Free Software Foundation, Inc.,                                       *
- *   59 Temple Place Suite 330,                                            *
- *   Boston, MA  02111-1307, USA.                                          *
- *                                                                         *
- ***************************************************************************/
-
-#ifndef __ATOM_H
-#define __ATOM_H
 
 /**
- * @file 
+ * @file
  * Atom.
  */
 
@@ -212,7 +192,7 @@ class CAtom : public CRoot
      * @return the size of the encapsulated data in octets (8bit - bytes).
      */
     virtual long BinarySizeGet();
-    
+
     /**
      * Copies the data from the AtomData instance to the given buffer - if possible.
      * @return the size of the data in octets (8bit - bytes).
@@ -221,7 +201,7 @@ class CAtom : public CRoot
 
     virtual CStream& Save(CStream& oStream);
     virtual CStream& Load(CStream& oStream);
-    
+
     /**
      * resolves the old link-pointer (as stored) to the new instance-pointer (as needed) after "load()".
      * @return success? TODO.
@@ -257,7 +237,7 @@ class CAtom : public CRoot
      * @return success? TODO.
      */
     bool UserSignSet(long nSign);
-    
+
     /**
      * get user sign
      * @return the previously set user-sign of the atom.
@@ -294,5 +274,5 @@ class CAtom : public CRoot
   };
 
 } // namespace odb
-
-#endif // __ATOM_H
+ // __ATOM_H
+#endif

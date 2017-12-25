@@ -1,3 +1,6 @@
+#ifndef __ODB_H
+#define __ODB_H
+
 /***************************************************************************
                            odb.h  -  description
                              -------------------
@@ -6,29 +9,6 @@
     email                : manfred@morgner.com
  ***************************************************************************/
 
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, write to the                         *
- *                                                                         *
- *   Free Software Foundation, Inc.,                                       *
- *   59 Temple Place Suite 330,                                            *
- *   Boston, MA  02111-1307, USA.                                          *
- *                                                                         *
- ***************************************************************************/
-
-#ifndef __ODB_H
-#define __ODB_H
 
 /* *
  * @file
@@ -57,6 +37,8 @@ namespace odb {
  */
 class CODB : public CListRoot
   {
+  long const ODBF{0x000000004642444f};
+
   /*
      "friend" declarations
      necessary for access to protected members which will be necessary for some
@@ -77,15 +59,15 @@ class CODB : public CListRoot
     std::string m_sFileName;
 
   public:
-             CODB( const std::string& sFileName = _TEXT("") );
+             CODB( const std::string& sFileName = ""s );
     virtual ~CODB();
 
     void Dump();
 
-    bool Save( const std::string& sFileName = _TEXT("") );
-    bool Load( const std::string& sFileName = _TEXT("") );
+    bool Save( const std::string& sFileName = ""s );
+    bool Load( const std::string& sFileName = ""s );
 
-    bool SaveXML( const std::string& sFileName = _TEXT("") );
+    bool SaveXML( const std::string& sFileName = ""s );
 
     long IdValidate( const CRoot* poInstance );
 
@@ -147,8 +129,8 @@ class CODB : public CListRoot
     /***********/
     long      AtomFormatSet(       CAtom* poAtom,
                              const std::string&   sFormat,
-                             const std::string&   sPrefix = _TEXT(""),
-                             const std::string&   sSuffix = _TEXT("") );
+                             const std::string&   sPrefix = ""s,
+                             const std::string&   sSuffix = ""s );
     long      AtomPrefixSet(       CAtom* poAtom,
                              const std::string&   sPrefix );
     long      AtomSuffixSet(       CAtom* poAtom,
@@ -239,5 +221,5 @@ class CODB : public CListRoot
   }; // class CODB : public CListRoot
 
 } // namespace odb
-
-#endif // __ODB_H
+ // __ODB_H
+#endif

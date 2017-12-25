@@ -1,3 +1,6 @@
+#ifndef __CLASS_H
+#define __CLASS_H
+
 /***************************************************************************
                           class.h  -  description
                              -------------------
@@ -6,29 +9,6 @@
     email                : manfred@morgner.com
  ***************************************************************************/
 
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, write to the                         *
- *                                                                         *
- *   Free Software Foundation, Inc.,                                       *
- *   59 Temple Place Suite 330,                                            *
- *   Boston, MA  02111-1307, USA.                                          *
- *                                                                         *
- ***************************************************************************/
-
-#ifndef __CLASS_H
-#define __CLASS_H
 
 /**
  * @file
@@ -44,7 +24,7 @@ class CObject;
 /**
  * The Class.
  */
-class CClass : public CRoot  
+class CClass : public CRoot
   {
     DECLARE_RTTI
 
@@ -78,7 +58,7 @@ class CClass : public CRoot
            */
              CClass(const std::string& sName, CObject* poOMAL = 0);
 
-          /** 
+          /**
            * Destructor.
            */
     virtual ~CClass();
@@ -112,7 +92,7 @@ class CClass : public CRoot
      * @return TODO.
      */
     CClass* ClassSet(const CClass* poClass);
-    
+
     /**
      * Get the parent-class.
      * @return the "parent class" of this class.
@@ -133,5 +113,5 @@ class CClass : public CRoot
   }; // class CClass
 
   } // namespace odb
-
-#endif // __ODB_CLASS_H
+ // __ODB_CLASS_H
+#endif

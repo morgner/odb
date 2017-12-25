@@ -6,26 +6,6 @@
     email                : manfred@morgner.com
  ***************************************************************************/
 
-/***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, write to the                         *
- *                                                                         *
- *   Free Software Foundation, Inc.,                                       *
- *   59 Temple Place Suite 330,                                            *
- *   Boston, MA  02111-1307, USA.                                          *
- *                                                                         *
- ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>
@@ -34,6 +14,8 @@
 #include "generic.h"
 
 #include "odb.h"
+
+#include <ostream> // std::cerr
 
 using namespace odb;
 
@@ -86,7 +68,7 @@ void uiSearchAtomInObjectByName()
   std::cout << "3 named Atoms on one Object, Hit for Atom 2 and 3" << std::endl;
   std::cout << ">>-------------- creating  ---------------->>" << std::endl;
 
-  CObject o(_TEXT("Django"));
+  CObject o("Django"s);
   o.AtomAdd( new CAtom( "kalando",  1.201) );
   o.AtomAdd( new CAtom( "kalender", 1.202 ) );
   o.AtomAdd( new CAtom( "sender",   1.203 ) );
@@ -123,7 +105,7 @@ void uiSearchAtomInObjectByUserSign()
   std::cout << "3 UserMarked Atoms on one Object, Hit for Atom 2 and 3" << std::endl;
   std::cout << ">>-------------- creating  ---------------->>" << std::endl;
 
-  CObject o(_TEXT("Django"));
+  CObject o("Django"s);
   CAtom* poAtom;
   poAtom = new CAtom( "A", 17L);  o.AtomAdd( poAtom );  poAtom->UserSignSet(0x0813);
   poAtom = new CAtom( "B", 1.7);  o.AtomAdd( poAtom );  poAtom->UserSignSet(0x0F03);
@@ -174,18 +156,18 @@ void uiOdbDump(CODB& odb)
 
 void uiOdbAddData(CODB& odb)
   {
-  CClass*  poClassAdr = odb.NewClass (_TEXT("Person"));
-  CReason* poReason1  = odb.NewReason(_TEXT("Mutter"),     poClassAdr, poClassAdr);
-  CReason* poReason2  = odb.NewReason(_TEXT("Vater"),      poClassAdr, poClassAdr);
-  CReason* poReason3  = odb.NewReason(_TEXT("Kind"),       poClassAdr, poClassAdr);
-  CReason* poReason4  = odb.NewReason(_TEXT("Ehepartner"), poClassAdr, poClassAdr);
+  CClass*  poClassAdr = odb.NewClass ("Person"s);
+  CReason* poReason1  = odb.NewReason("Mutter"s,     poClassAdr, poClassAdr);
+  CReason* poReason2  = odb.NewReason("Vater"s,      poClassAdr, poClassAdr);
+  CReason* poReason3  = odb.NewReason("Kind"s,       poClassAdr, poClassAdr);
+  CReason* poReason4  = odb.NewReason("Ehepartner"s, poClassAdr, poClassAdr);
 
-  CObject* poObject = odb.NewObject(_TEXT("Mario Werder"));
-  poObject->AtomAdd( odb.Add(new CAtom(_TEXT("Vorname"), _TEXT("Mario"))) );
+  CObject* poObject = odb.NewObject("Mario Werder"s);
+  poObject->AtomAdd( odb.Add(new CAtom("Vorname"s, "Mario"s)) );
   *poObject = poClassAdr;
 
 
-  CObject* poObject2 = odb.NewObject(_TEXT("Ilse Werder-Gross"), poClassAdr);
+  CObject* poObject2 = odb.NewObject("Ilse Werder-Gross"s, poClassAdr);
 
   CAtom* poAtom = odb.NewAtom("Höhe");
   *poAtom = 1.67;
@@ -194,14 +176,14 @@ void uiOdbAddData(CODB& odb)
   poAtom->SuffixSet("m");
 
   poObject2->AtomAdd( poAtom );
-  poObject2->AtomAdd( odb.Add(new CAtom(_TEXT("Vorname"), _TEXT("Ilse"))) );
-  poObject2->AtomAdd( odb.Add(new CAtom(_TEXT("Name"),    _TEXT("Werder-Gross"))) );
-  poObject2->AtomAdd( odb.Add(new CAtom(_TEXT("Strasse"), _TEXT("Kleine Gasse 1"))) );
+  poObject2->AtomAdd( odb.Add(new CAtom("Vorname"s, "Ilse"s)) );
+  poObject2->AtomAdd( odb.Add(new CAtom("Name"s,    "Werder-Gross"s)) );
+  poObject2->AtomAdd( odb.Add(new CAtom("Strasse"s, "Kleine Gasse 1"s)) );
 
 
-  CObject* poObject3 = new CObject(_TEXT("Alfons Gross"), poClassAdr);
-  poObject3->AtomAdd( odb.Add(new CAtom(_TEXT("Vorname"), _TEXT("Alfons"))) );
-  poObject3->AtomAdd( odb.Add(new CAtom(_TEXT("Name"), _TEXT("Gross"))) );
+  CObject* poObject3 = new CObject("Alfons Gross"s, poClassAdr);
+  poObject3->AtomAdd( odb.Add(new CAtom("Vorname"s, "Alfons"s)) );
+  poObject3->AtomAdd( odb.Add(new CAtom("Name"s, "Gross"s)) );
 
   odb.Add(poObject3);
 
@@ -261,7 +243,9 @@ int main (int argc, char * const argv[])
         std::cout << "Save odb" << std::endl;
         try
           {
-          pOdb->Save("torre.odb");
+          std::cerr << "ABORT: Write function is to reimplment\n";
+//          pOdb->Save("torre.odb");
+//          pOdb->SaveXML("torre.odb.xml");
           }
         catch(...)
           {
@@ -288,7 +272,7 @@ int main (int argc, char * const argv[])
           {
           char ac[4096];
           long nSize = 4096;
-          pOdb->Add( new CAtom( _TEXT("BINAER"), ac, nSize) );
+          pOdb->Add( new CAtom("BINAER"s, ac, nSize) );
           }
         catch(...)
           {
@@ -327,7 +311,7 @@ int main (int argc, char * const argv[])
           // make an atom
 					CAtom oAtom;
           // add data
-          oAtom = _TEXT("'these are the binary data, in this case a string'");
+          oAtom = "'these are the binary data, in this case a string'"s;
 
           std::cout << "Data bytes: " << oAtom.BinarySizeGet() << std::endl;
 
@@ -369,16 +353,16 @@ int main (int argc, char * const argv[])
         break;
 
       case 'a': // SEARCH ATOMS BY NAME
-        SearchAtoms(*pOdb, _TEXT("Vorname") );
-        SearchAtoms(*pOdb, _TEXT("Name") );
+        SearchAtoms(*pOdb, "Vorname"s );
+        SearchAtoms(*pOdb, "Name"s );
         break;
 
       case 'b': // SEARCH OBJECTS BY NAME
-        SearchObjects(*pOdb, _TEXT("Ilse Werder-Gross") );
-        SearchObjects(*pOdb, _TEXT("Mario Werder") );
+        SearchObjects(*pOdb, "Ilse Werder-Gross"s );
+        SearchObjects(*pOdb, "Mario Werder"s );
         break;
 
-              
+
       case 'Q':
       case 'q':
       case 'X':
